@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "hithub.com/rushminatorr/carz/pb";
+
+message Location {
+  double lat = 1;
+  double lng = 2;
+}
+
+enum Status {
+  OFF = 0;
+  FREE = 1;
+  RIDE = 2;
+}
+
+message Car {
+  string id = 1;
+  string driver = 2;
+  Location location = 3;
+  google.protobuf.Timestamp updated = 4;
+  Status status = 5;
+}

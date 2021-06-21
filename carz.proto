@@ -1,7 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "hithub.com/rushminatorr/carz/pb";
+option go_package = "github.com/rushminatorr/carz/pb";
 
 message Location {
   double lat = 1;

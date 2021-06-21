@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -15,6 +16,18 @@ import (
 )
 
 func main() {
+
+	logger, _ := zap.NewProduction()
+	defer logger.Sync() // flushes buffer, if any
+	sugar := logger.Sugar()
+	sugar.Infow("failed to fetch URL",
+		// Structured context as loosely typed key-value pairs.
+		"url", "test",
+		"attempt", 3,
+		"backoff", time.Second,
+	)
+	sugar.Infof("Failed to fetch URL: %s", "test")
+
 	//var loc pb.Location
 	loc := pb.Location{
 		Lat: -22.95192,
@@ -63,7 +76,7 @@ func main() {
 	}
 	fmt.Println(string(jdata))
 
-	t := car.Updated.AsTime()
+	t = car.Updated.AsTime()
 	fmt.Println(t)
 	tz, err := time.LoadLocation("America/New_York")
 	if err != nil {
